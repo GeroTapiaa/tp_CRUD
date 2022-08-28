@@ -37,7 +37,7 @@ const controller = {
 		const {name, price,discount,description, category} =(req.body)
 		let products = loadProduct();
 		const newProduct = {
-			id : products[product.length -1 ].id +1,
+			id : products[products.length -1 ].id +1,
 			name : name.trim(),
 			description : description.trim(),
 			price : +price,
@@ -48,7 +48,7 @@ const controller = {
 		productsModify = [...products , newProduct]
 
 		storeProduct(productsModify);
-		return res.redirect('/product')
+		return res.redirect('/products')
 	},
 
 	// Update - Form to edit
@@ -65,7 +65,7 @@ const controller = {
 		// Do the magic
 		const {name, price,discount,description, category} =(req.body)
 		let productsModify = loadProduct().map(product =>{
-			if (product.id === req.params.id){
+			if (product.id === +req.params.id){
 				return{
 					id: product.id,
 					name : name.trim(),
@@ -73,7 +73,7 @@ const controller = {
 					price : +price,
 					discount : +discount,
 					category,
-					image : "default-image.png"
+					image : product.image
 				}
 			}
 			return product
